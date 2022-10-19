@@ -1,0 +1,42 @@
+env:
+  browser: true
+  es2021: true
+# settings:
+#   import/resolver:
+#     - node
+#     - webpack
+extends:
+  - airbnb
+  - plugin:functional/external-recommended
+  - plugin:functional/recommended
+  - plugin:react/recommended
+  - plugin:react-hooks/recommended
+parser: '@typescript-eslint/parser'
+parserOptions:
+  # extraFileExtensions: [".cjs"],
+  project: "./tsconfig.eslint.json"
+  ecmaFeatures:
+    jsx: true
+  ecmaVersion: latest
+  sourceType: module
+plugins:
+  - react
+  - functional
+  - '@typescript-eslint'
+rules:
+  import/extensions: 0
+  import/no-unresolved: 0
+  react/prop-types: 0
+  no-console: 0
+  functional/no-conditional-statement: 0
+  functional/no-expression-statement: 0
+  functional/immutable-data: 0
+  functional/functional-parameters: 0
+  functional/no-try-statement: 0
+  functional/no-throw-statement: 0
+  functional/no-return-void: 0
+  no-param-reassign: ["error", { "props": false }]
+  no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
+  react/jsx-filename-extension: [1, { "extensions": [".ts", ".tsx"] }]
+  react/function-component-definition: [2, { namedComponents: "arrow-function" }]
+  react/react-in-jsx-scope: 0

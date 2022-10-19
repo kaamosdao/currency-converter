@@ -1,3 +1,6 @@
-import './assets/scss/style.scss';
+import React from 'react';
+import App from './components/App';
 
-console.log('aasd');
+const init = () => <App />;
+
+export default init;

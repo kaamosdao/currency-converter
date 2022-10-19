@@ -10,7 +10,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
-  entry: './src/index.tsx',
+  entry: './src/render.tsx',
   output: {
     path: path.join(__dirname, 'dist', 'public'),
     clean: true,
