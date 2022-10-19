@@ -16,6 +16,7 @@ module.exports = {
     clean: true,
   },
   devServer: {
+    historyApiFallback: true,
     port: 4242,
   },
   devtool: mode === 'development' ? 'cheap-module-source-map' : 'source-map',
