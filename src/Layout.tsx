@@ -8,13 +8,19 @@ const Layout: React.FC = () => (
         <span className="navbar-brand mb-0 h1">Currency Converter</span>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <Link className="nav-link" to="/">Convertation</Link>
-            <Link className="nav-link" to="/exchangerates">ExchangeRates</Link>
+            <Link className="nav-link" to="/">
+              Convertation
+            </Link>
+            <Link className="nav-link" to="/exchangerates">
+              ExchangeRates
+            </Link>
           </div>
         </div>
       </div>
     </nav>
-    <Outlet />
+    <div className="h-100 d-flex justify-content-center align-items-center">
+      <Outlet />
+    </div>
   </div>
 );
 
