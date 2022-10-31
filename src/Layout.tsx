@@ -6,15 +6,13 @@ const Layout: React.FC = () => (
     <nav className="navbar navbar-expand-lg bg-light">
       <div className="container-fluid">
         <span className="navbar-brand mb-0 h1">Currency Converter</span>
-        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div className="navbar-nav">
-            <Link className="nav-link" to="/">
-              Convertation
-            </Link>
-            <Link className="nav-link" to="/exchangerates">
-              ExchangeRates
-            </Link>
-          </div>
+        <div className="d-flex justify-content-around me-5">
+          <Link className="nav-link" to="/">
+            Convertation
+          </Link>
+          <Link className="nav-link ms-3" to="/exchangerates">
+            ExchangeRates
+          </Link>
         </div>
       </div>
     </nav>
