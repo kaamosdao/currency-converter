@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import IRate from '../interfaces/interfaces';
+import routes from '../routes';
 
 const ExchangeRates: React.FC = () => {
   const [baseCurrency, setBaseCurrency] = useState<string>('');
@@ -9,8 +10,7 @@ const ExchangeRates: React.FC = () => {
 
   useEffect(() => {
     const getCurrency = async () => {
-      const geoLocationApiAdress = 'https://ipgeolocation.abstractapi.com/v1';
-      const response = await axios.get(geoLocationApiAdress, {
+      const response = await axios.get(routes.geolocation, {
         params: {
           api_key: process.env.REACT_APP_GEO_KEY,
         },
@@ -22,7 +22,7 @@ const ExchangeRates: React.FC = () => {
 
   useEffect(() => {
     if (baseCurrency) {
-      const getTarget = (base: string) => {
+      const getExchangeCurrencies = (base: string) => {
         if (base === 'EUR') {
           return 'USD';
         }
@@ -31,16 +31,25 @@ const ExchangeRates: React.FC = () => {
         }
         return 'USD,EUR';
       };
+      // const getExchangeRates = async (currency: string) => {
+      //   const response = await axios.get(routes.rates, {
+      //     params: {
+      //       api_key: process.env.REACT_APP_RATES_KEY,
+      //       base: currency,
+      //       symbols: getExchangeCurrencies(baseCurrency),
+      //     },
+      //   });
+      //   setRates(response.data.exchange_rates);
+      // };
       const getExchangeRates = async (currency: string) => {
-        const ratesApiAdress = 'https://exchange-rates.abstractapi.com/v1/live';
-        const response = await axios.get(ratesApiAdress, {
+        const response = await axios.get(routes.rates, {
           params: {
-            api_key: process.env.REACT_APP_RATES_KEY,
             base: currency,
-            target: getTarget(baseCurrency),
+            symbols: getExchangeCurrencies(baseCurrency),
           },
+          headers: { apikey: '638MYx3XDtSkA31Ow406rVqKW0bdeGpl' },
         });
-        setRates(response.data.exchange_rates);
+        setRates(response.data.rates);
       };
       getExchangeRates(baseCurrency);
     }
@@ -55,6 +64,11 @@ const ExchangeRates: React.FC = () => {
     inputRef.current!.value = '';
   };
 
+  const getConvertedCurency = (currency: string, convertCurrency: string, rate: string): string => {
+    const amount = (1 / Number(rate)).toFixed(2);
+    return `1 ${convertCurrency} = ${amount} ${currency}`;
+  };
+
   return (
     <div className="card w-25  text-center">
       <div className="card-body">
@@ -63,14 +77,12 @@ const ExchangeRates: React.FC = () => {
       <ul className="list-group list-group-flush">
         {rates.USD && (
           <li className="list-group-item">
-            USD:&nbsp;
-            {rates.USD}
+            {getConvertedCurency(baseCurrency, 'USD', rates.USD)}
           </li>
         )}
         {rates.EUR && (
           <li className="list-group-item">
-            EUR:&nbsp;
-            {rates.EUR}
+            {getConvertedCurency(baseCurrency, 'EUR', rates.EUR)}
           </li>
         )}
       </ul>

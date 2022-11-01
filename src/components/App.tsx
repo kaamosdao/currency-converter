@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from '../Layout';
-import Convertation from './Convertation';
-import ExchangeRates from './ExchangeRates';
-import Notfound from './NotfoundPage';
+import Layout from './Layout';
+import Convertation from '../pages/ConvertationPage';
+import ExchangeRates from '../pages/ExchangeRatesPage';
+import Notfound from '../pages/NotfoundPage';
 
 const App: React.FC = () => (
   <BrowserRouter>
