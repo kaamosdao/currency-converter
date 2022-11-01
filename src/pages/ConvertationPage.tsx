@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const Convertation: React.FC = () => {
   useEffect(() => {
-    console.log(process.env.REACT_APP_GEO_KEY);
+    console.log('render ConvertationPage');
   });
   return <p>Convertation</p>;
 };
