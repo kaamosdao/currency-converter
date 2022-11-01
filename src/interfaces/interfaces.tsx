@@ -3,7 +3,13 @@ interface IRate {
 }
 
 export interface IRoutes {
-  readonly [rateName: string]: string;
+  readonly [routeName: string]: string;
+}
+
+export interface IConvertResult {
+  readonly from: string;
+  readonly to: string;
+  readonly amount: number;
 }
 
 export default IRate;
