@@ -7,7 +7,7 @@ export interface IRoutes {
 }
 
 export interface IFormValue {
-  readonly query: string;
+  readonly converterQuery: string;
 }
 
 export interface IParsedQuery {
