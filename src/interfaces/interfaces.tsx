@@ -6,8 +6,12 @@ export interface IRoutes {
   readonly [routeName: string]: string;
 }
 
-export interface IFormValue {
+export interface IFormConvert {
   readonly converterQuery: string;
+}
+
+export interface IFormExchange{
+  readonly currency: string;
 }
 
 export interface IParsedQuery {

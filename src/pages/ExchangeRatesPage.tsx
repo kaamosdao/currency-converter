@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
-import IRate from '../interfaces/interfaces';
+import React, { useEffect, useState } from 'react';
+import { useFormik, FormikProps, FormikHelpers } from 'formik';
+import IRate, { IFormExchange } from '../interfaces/interfaces';
+import { currencySchema } from '../validationSchema';
 import useHttp from '../hooks';
 import MakeRequest from '../makeRequest';
 
 const ExchangeRates: React.FC = () => {
   const [baseCurrency, setBaseCurrency] = useState<string>('');
   const [rates, setRates] = useState<IRate>({});
-  const inputRef = useRef<HTMLInputElement | null>(null);
   const httpClient: MakeRequest = useHttp();
 
   useEffect(() => {
@@ -19,16 +20,26 @@ const ExchangeRates: React.FC = () => {
     }
   }, [baseCurrency, httpClient]);
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const target = event.target as typeof event.target & {
-      readonly currency: { readonly value: string };
-    };
-    setBaseCurrency(target.currency.value);
-    inputRef.current!.value = '';
-  };
+  const formik: FormikProps<IFormExchange> = useFormik<IFormExchange>({
+    initialValues: { currency: '' },
+    validationSchema: currencySchema,
+    onSubmit: async (
+      values: IFormExchange,
+      actions: Readonly<FormikHelpers<IFormExchange>>,
+    ) => {
+      const currency = values.currency.toUpperCase();
+      setBaseCurrency(currency);
+      actions.resetForm();
+    },
+  });
+  const showTooltip = formik.errors.currency ? 'd-block' : 'd-none';
+  const tooltipClass = `invalid-tooltip w-100 ${showTooltip}`;
 
-  const getConvertedCurency = (currency: string, convertCurrency: string, rate: string): string => {
+  const getConvertedCurency = (
+    currency: string,
+    convertCurrency: string,
+    rate: string,
+  ): string => {
     const amount = (1 / Number(rate)).toFixed(2);
     return `1 ${convertCurrency} = ${amount} ${currency}`;
   };
@@ -55,20 +66,25 @@ const ExchangeRates: React.FC = () => {
           Your base currency:&nbsp;
           <b>{baseCurrency}</b>
         </p>
-        <form className="d-flex" onSubmit={onSubmit}>
+        <form className="d-flex" onSubmit={formik.handleSubmit}>
           <label htmlFor="currency" className="visually-hidden">
             Currency
           </label>
-          <input
-            ref={inputRef}
-            type="text"
-            className="form-control form-control-sm"
-            id="currency"
-            name="currency"
-            placeholder="new currency"
-          />
+          <div className="position-relative">
+            <input
+              type="text"
+              className="form-control form-control-sm"
+              id="currency"
+              name="currency"
+              placeholder="new currency"
+              onChange={formik.handleChange}
+              value={formik.values.currency}
+              disabled={formik.isSubmitting}
+            />
+            <div className={tooltipClass}>{formik.errors.currency}</div>
+          </div>
           <div className="col-auto">
-            <button type="submit" className="btn btn-primary ms-3 btn-sm">
+            <button type="submit" className="btn btn-primary ms-3 btn-sm" disabled={formik.isSubmitting}>
               Change
             </button>
           </div>

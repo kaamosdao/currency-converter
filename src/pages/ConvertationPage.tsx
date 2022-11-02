@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useFormik, FormikProps, FormikHelpers } from 'formik';
-import { IFormValue } from '../interfaces/interfaces';
+import { IFormConvert } from '../interfaces/interfaces';
 import validationSchema from '../validationSchema';
 import parseQuery from '../parseQuery';
 import useHttp from '../hooks';
@@ -10,12 +10,12 @@ const Convertation: React.FC = () => {
   const [result, setResult] = useState<string | null>(null);
   const httpClient: MakeRequest = useHttp();
 
-  const formik: FormikProps<IFormValue> = useFormik<IFormValue>({
+  const formik: FormikProps<IFormConvert> = useFormik<IFormConvert>({
     initialValues: { converterQuery: '' },
     validationSchema,
     onSubmit: async (
-      values: IFormValue,
-      actions: Readonly<FormikHelpers<IFormValue>>,
+      values: IFormConvert,
+      actions: Readonly<FormikHelpers<IFormConvert>>,
     ) => {
       const query = values.converterQuery.trim();
       const { from, to, amount } = parseQuery(query);
@@ -24,7 +24,7 @@ const Convertation: React.FC = () => {
       actions.resetForm();
     },
   });
-  const showTooltip = formik.touched.converterQuery && formik.errors.converterQuery ? 'd-block' : 'd-none';
+  const showTooltip = formik.errors.converterQuery ? 'd-block' : 'd-none';
   const tooltipClass = `invalid-tooltip w-100 ${showTooltip}`;
 
   return (
