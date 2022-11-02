@@ -47,7 +47,7 @@ const ExchangeRates: React.FC = () => {
             base: currency,
             symbols: getExchangeCurrencies(baseCurrency),
           },
-          headers: { apikey: '638MYx3XDtSkA31Ow406rVqKW0bdeGpl' },
+          headers: { apikey: process.env.REACT_APP_RATES_KEY },
         });
         setRates(response.data.rates);
       };

@@ -6,4 +6,14 @@ export interface IRoutes {
   readonly [routeName: string]: string;
 }
 
+export interface IFormValue {
+  readonly query: string;
+}
+
+export interface IParsedQuery {
+  readonly from: string;
+  readonly to: string;
+  readonly amount: string;
+}
+
 export default IRate;

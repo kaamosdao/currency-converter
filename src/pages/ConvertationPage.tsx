@@ -1,41 +1,48 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState } from 'react';
+import { useFormik, FormikProps, FormikHelpers } from 'formik';
 import axios from 'axios';
 import routes from '../routes';
+import { IFormValue } from '../interfaces/interfaces';
+import validationSchema from '../validationSchema';
+import parseQuery from '../parseQuery';
 
 const Convertation: React.FC = () => {
-  const [result, setResult] = useState<number | null>(null);
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [result, setResult] = useState<string | null>(null);
 
   const convertCurrency = async (from: string, to: string, amount: string) => {
     const response = await axios.get(routes.convert, {
       params: { from, to, amount },
-      headers: { apikey: '638MYx3XDtSkA31Ow406rVqKW0bdeGpl' },
+      headers: { apikey: process.env.REACT_APP_RATES_KEY },
     });
     return response.data.result;
   };
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    const setCurrency = async (from: string, to: string, amount: string) => {
-      const convertedResult = await convertCurrency(from, to, amount);
-      setResult(convertedResult);
-    };
-
-    event.preventDefault();
-    const target = event.target as typeof event.target & {
-      readonly converter: { readonly value: string };
-    };
-    const values = target.converter.value.trim().split(' ');
-
-    setCurrency(values[1], values[3], values[0]);
-  };
-
-  useEffect(() => {
-    console.log('render ConvertationPage');
+  const formik: FormikProps<IFormValue> = useFormik<IFormValue>({
+    initialValues: { query: '' },
+    validationSchema,
+    onSubmit: (
+      values: IFormValue,
+      actions: Readonly<FormikHelpers<IFormValue>>,
+    ): void => {
+      const setCurrency = async (query: string) => {
+        const { from, to, amount } = parseQuery(query);
+        const convertedResult: number = await convertCurrency(from, to, amount);
+        setResult(`${query} = ${convertedResult}`);
+      };
+      const query = values.query.trim();
+      setCurrency(query);
+      actions.resetForm();
+    },
   });
+  const showTooltip = formik.touched.query && formik.errors.query ? 'd-block' : 'd-none';
+  const tooltipClass = `invalid-tooltip ${showTooltip}`;
 
   return (
     <div className="d-flex flex-column">
-      <form className="row g-3 align-items-center" onSubmit={onSubmit}>
+      <form
+        className="row g-3 align-items-center"
+        onSubmit={formik.handleSubmit}
+      >
         <div className="col-auto">
           <label htmlFor="converter" className="col-form-label">
             Converter
@@ -43,13 +50,18 @@ const Convertation: React.FC = () => {
         </div>
         <div className="col-auto">
           <input
-            ref={inputRef}
             type="text"
             className="form-control"
             id="converter"
             name="converter"
             placeholder="15 usd in eur"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.query}
           />
+          <div className={tooltipClass}>
+            {formik.touched.query && formik.errors.query}
+          </div>
         </div>
         <div className="col-auto">
           <button type="submit" className="btn btn-primary ms-3">
@@ -57,7 +69,10 @@ const Convertation: React.FC = () => {
           </button>
         </div>
       </form>
-      <p className="result">{result}</p>
+      <p className="result mt-3">
+        Convertation:&nbsp;
+        {result}
+      </p>
     </div>
   );
 };
