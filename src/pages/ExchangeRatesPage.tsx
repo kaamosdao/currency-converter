@@ -1,59 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import IRate from '../interfaces/interfaces';
-import routes from '../routes';
+import useHttp from '../hooks';
+import MakeRequest from '../makeRequest';
 
 const ExchangeRates: React.FC = () => {
   const [baseCurrency, setBaseCurrency] = useState<string>('');
   const [rates, setRates] = useState<IRate>({});
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const httpClient: MakeRequest = useHttp();
 
   useEffect(() => {
-    const getCurrency = async () => {
-      const response = await axios.get(routes.geolocation, {
-        params: {
-          api_key: process.env.REACT_APP_GEO_KEY,
-        },
-      });
-      setBaseCurrency(response.data.currency.currency_code);
-    };
-    getCurrency();
-  }, []);
+    httpClient.getCurrency().then((base) => setBaseCurrency(base));
+  }, [httpClient]);
 
   useEffect(() => {
     if (baseCurrency) {
-      const getExchangeCurrencies = (base: string) => {
-        if (base === 'EUR') {
-          return 'USD';
-        }
-        if (base === 'USD') {
-          return 'EUR';
-        }
-        return 'USD,EUR';
-      };
-      // const getExchangeRates = async (currency: string) => {
-      //   const response = await axios.get(routes.rates, {
-      //     params: {
-      //       api_key: process.env.REACT_APP_RATES_KEY,
-      //       base: currency,
-      //       symbols: getExchangeCurrencies(baseCurrency),
-      //     },
-      //   });
-      //   setRates(response.data.exchange_rates);
-      // };
-      const getExchangeRates = async (currency: string) => {
-        const response = await axios.get(routes.rates, {
-          params: {
-            base: currency,
-            symbols: getExchangeCurrencies(baseCurrency),
-          },
-          headers: { apikey: process.env.REACT_APP_RATES_KEY },
-        });
-        setRates(response.data.rates);
-      };
-      getExchangeRates(baseCurrency);
+      httpClient.getExchangeRates(baseCurrency).then((data) => setRates(data));
     }
-  }, [baseCurrency]);
+  }, [baseCurrency, httpClient]);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

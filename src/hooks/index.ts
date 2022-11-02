@@ -1,6 +1,7 @@
 import { useContext } from 'react';
-import HttpClientContext from './HttpClientContext.tsx';
+import MakeRequest from '../makeRequest';
+import HttpClientContext from './HttpClientContext';
 
-const useHttp = () => useContext<HttpClientContext>(HttpClientContext);
+const useHttp = () => useContext<MakeRequest>(HttpClientContext);
 
 export default useHttp;
