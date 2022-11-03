@@ -1,4 +1,12 @@
-import MakeRequest from '../makeRequest';
+import { ThunkAction } from '@reduxjs/toolkit';
+import { AnyAction } from 'redux';
+import { RootState } from '../slices';
 
-type httpClientContextType = MakeRequest;
-export default httpClientContextType;
+type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  AnyAction
+>
+
+export default AppThunk;

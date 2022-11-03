@@ -1,9 +1,9 @@
 /* eslint-disable functional/no-class */
 /* eslint-disable functional/no-this-expression */
 import { AxiosInstance } from 'axios';
-import IRate, { IRoutes } from './interfaces/interfaces';
+import IRate, { IMakeRequest, IRoutes } from './interfaces/interfaces';
 
-class MakeRequest {
+class MakeRequest implements IMakeRequest {
   readonly client: AxiosInstance;
 
   readonly routes: IRoutes;

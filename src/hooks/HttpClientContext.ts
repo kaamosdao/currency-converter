@@ -1,6 +1,6 @@
 import React from 'react';
-import httpClientContextType from '../interfaces/types';
+import { IMakeRequest } from '../interfaces/interfaces';
 
-const HttpClientContext = React.createContext<httpClientContextType>({} as httpClientContextType);
+const HttpClientContext = React.createContext<IMakeRequest>({} as IMakeRequest);
 
 export default HttpClientContext;
