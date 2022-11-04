@@ -1,6 +1,6 @@
 /* eslint-disable functional/no-this-expression */
 /* eslint-disable functional/no-class */
-import { ILocalStorageData } from './interfaces/interfaces';
+import { ILocalStorageData } from '../interfaces/interfaces';
 
 class LocalStorageData implements ILocalStorageData {
   readonly key: string;

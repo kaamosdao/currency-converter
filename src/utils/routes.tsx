@@ -1,4 +1,4 @@
-import { IRoutes } from './interfaces/interfaces';
+import { IRoutes } from '../interfaces/interfaces';
 
 // const routes: IRoutes = {
 //   geolocation: 'https://ipgeolocation.abstractapi.com/v1',

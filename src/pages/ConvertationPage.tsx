@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useFormik, FormikProps, FormikHelpers } from 'formik';
+import { useAppDispatch } from '../hooks';
 import { IFormConvert } from '../interfaces/interfaces';
-import validationSchema from '../validationSchema';
-import parseQuery from '../parseQuery';
-import useHttp from '../hooks';
-import MakeRequest from '../makeRequest';
+import validationSchema from '../utils/validationSchema';
+import parseQuery from '../utils/parseQuery';
+import { convertCurrency } from '../slices/convertationSlice';
+import ConvertationResult from '../components/convertationResult';
 
 const Convertation: React.FC = () => {
-  const [result, setResult] = useState<string | null>(null);
-  const httpClient: MakeRequest = useHttp();
+  const dispatch = useAppDispatch();
 
   const formik: FormikProps<IFormConvert> = useFormik<IFormConvert>({
     initialValues: { converterQuery: '' },
@@ -18,9 +18,8 @@ const Convertation: React.FC = () => {
       actions: Readonly<FormikHelpers<IFormConvert>>,
     ) => {
       const query = values.converterQuery.trim();
-      const { from, to, amount } = parseQuery(query);
-      const convertedResult: number = await httpClient.convertCurrency(from, to, amount);
-      setResult(`${query} = ${convertedResult}`);
+      const data = parseQuery(query);
+      dispatch(convertCurrency(data));
       actions.resetForm();
     },
   });
@@ -49,20 +48,19 @@ const Convertation: React.FC = () => {
             value={formik.values.converterQuery}
             disabled={formik.isSubmitting}
           />
-          <div className={tooltipClass}>
-            {formik.errors.converterQuery}
-          </div>
+          <div className={tooltipClass}>{formik.errors.converterQuery}</div>
         </div>
         <div className="col-auto">
-          <button type="submit" className="btn btn-primary ms-3" disabled={formik.isSubmitting}>
+          <button
+            type="submit"
+            className="btn btn-primary ms-3"
+            disabled={formik.isSubmitting}
+          >
             Convert
           </button>
         </div>
       </form>
-      <p className="result mt-3">
-        Convertation:&nbsp;
-        {result}
-      </p>
+      <ConvertationResult />
     </div>
   );
 };

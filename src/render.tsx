@@ -1,10 +1,10 @@
 import { createRoot } from 'react-dom/client';
 import axios from 'axios';
-import MakeRequest from './makeRequest';
+import MakeRequest from './utils/makeRequest';
 import init from './index.tsx';
 import './assets/scss/style.scss';
-import routes from './routes';
-import LocalStorageData from './localStorageData';
+import routes from './utils/routes';
+import LocalStorageData from './utils/localStorageData';
 
 const render = async () => {
   const container = document.querySelector('#root');

@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import exchangeRatesReducer from './exchangeRatesSlice';
+import convertationReducer from './convertationSlice';
 
 const store = configureStore({
   reducer: {
     rates: exchangeRatesReducer,
+    convertation: convertationReducer,
   },
 });
 

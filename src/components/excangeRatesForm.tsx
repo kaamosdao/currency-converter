@@ -1,14 +1,20 @@
 import React, { useEffect } from 'react';
 import { useFormik, FormikProps, FormikHelpers } from 'formik';
-import useHttp, { useAppDispatch, useAppSelector, useLocalStorage } from '../hooks';
+import useHttp, {
+  useAppDispatch,
+  useAppSelector,
+  useLocalStorage,
+} from '../hooks';
 import { IFormExchange, IMakeRequest } from '../interfaces/interfaces';
-import { currencySchema } from '../validationSchema';
+import { currencySchema } from '../utils/validationSchema';
 import fetchAndSetBaseCurrency, { fetchRates } from '../slices/thunks';
 import { setBaseCurrency } from '../slices/exchangeRatesSlice';
 
 const ExchangeRatesForm: React.FC = () => {
   const dispatch = useAppDispatch();
-  const baseCurrency: string = useAppSelector((state) => state.rates.baseCurrency);
+  const baseCurrency: string = useAppSelector(
+    (state) => state.rates.baseCurrency
+  );
   const localStorage = useLocalStorage();
   const httpClient: IMakeRequest = useHttp();
 
