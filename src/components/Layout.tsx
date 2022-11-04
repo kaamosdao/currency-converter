@@ -3,7 +3,7 @@ import { Outlet, Link } from 'react-router-dom';
 
 const Layout: React.FC = () => (
   <div className="d-flex flex-column h-100">
-    <nav className="navbar navbar-expand-lg bg-light">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container-fluid">
         <span className="navbar-brand mb-0 h1">Currency Converter</span>
         <button
