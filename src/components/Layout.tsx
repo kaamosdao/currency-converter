@@ -6,13 +6,26 @@ const Layout: React.FC = () => (
     <nav className="navbar navbar-expand-lg bg-light">
       <div className="container-fluid">
         <span className="navbar-brand mb-0 h1">Currency Converter</span>
-        <div className="d-flex justify-content-around me-5">
-          <Link className="nav-link" to="/">
-            Convertation
-          </Link>
-          <Link className="nav-link ms-3" to="/exchangerates">
-            ExchangeRates
-          </Link>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon" />
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <div className="navbar-nav">
+            <Link className="nav-link" to="/">
+              Convertation
+            </Link>
+            <Link className="nav-link ms-3" to="/exchangerates">
+              ExchangeRates
+            </Link>
+          </div>
         </div>
       </div>
     </nav>

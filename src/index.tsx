@@ -4,6 +4,7 @@ import App from './components/App';
 import store from './slices/index';
 import { ILocalStorageData } from './interfaces/interfaces';
 import LocalStorageContext from './hooks/localStorageContext';
+import 'bootstrap';
 
 const init = (localStorage: ILocalStorageData) => (
   <Provider store={store}>

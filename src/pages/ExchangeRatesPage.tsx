@@ -31,7 +31,7 @@ const ExchangeRatesPage: React.FC = () => {
 
   if (loadingStatus === 'failed' && error) {
     return (
-      <div className="card w-25  text-center">
+      <div className="card w-25 exchangerates text-center">
         <p className="text-danger m-3">
           Error:&nbsp;
           {errorHandler(error.code)}
@@ -46,7 +46,7 @@ const ExchangeRatesPage: React.FC = () => {
       {loadingStatus === 'loading' ? (
         <Spinner />
       ) : (
-        <div className="card w-25  text-center">
+        <div className="card w-25 exchangerates text-center">
           <ExchangeRates />
           <ExchangeRatesForm />
         </div>

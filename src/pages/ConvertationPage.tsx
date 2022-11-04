@@ -27,7 +27,7 @@ const Convertation: React.FC = () => {
   const tooltipClass = `invalid-tooltip w-100 ${showTooltip}`;
 
   return (
-    <div className="d-flex flex-column">
+    <div className="d-flex convertation flex-column">
       <form
         className="row g-3 align-items-center form needs-validation"
         onSubmit={formik.handleSubmit}
