@@ -9,7 +9,7 @@ const ExchangeRates: React.FC = () => {
   const getConvertedCurency = (
     currency: string,
     convertCurrency: string,
-    rate: string
+    rate: string,
   ): string => {
     const amount = (1 / Number(rate)).toFixed(2);
     return `1 ${convertCurrency} = ${amount} ${currency}`;

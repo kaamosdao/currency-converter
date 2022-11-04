@@ -1,44 +1,23 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useFormik, FormikProps, FormikHelpers } from 'formik';
-import useHttp, {
+import {
   useAppDispatch,
   useAppSelector,
-  useLocalStorage,
 } from '../hooks';
-import { IFormExchange, IMakeRequest } from '../interfaces/interfaces';
+import { IFormExchange } from '../interfaces/interfaces';
 import { currencySchema } from '../utils/validationSchema';
-import fetchAndSetBaseCurrency, { fetchRates } from '../slices/thunks';
 import { setBaseCurrency } from '../slices/exchangeRatesSlice';
 
 const ExchangeRatesForm: React.FC = () => {
   const dispatch = useAppDispatch();
-  const baseCurrency: string = useAppSelector(
-    (state) => state.rates.baseCurrency
-  );
-  const localStorage = useLocalStorage();
-  const httpClient: IMakeRequest = useHttp();
-
-  useEffect(() => {
-    if (localStorage.hasData()) {
-      const currency = localStorage.getData();
-      dispatch(setBaseCurrency(currency));
-    } else {
-      dispatch(fetchAndSetBaseCurrency(httpClient, localStorage));
-    }
-  }, [dispatch, localStorage, httpClient]);
-
-  useEffect(() => {
-    if (baseCurrency) {
-      dispatch(fetchRates(baseCurrency, httpClient));
-    }
-  }, [dispatch, httpClient, baseCurrency]);
+  const baseCurrency: string = useAppSelector((state) => state.rates.baseCurrency);
 
   const formik: FormikProps<IFormExchange> = useFormik<IFormExchange>({
     initialValues: { currency: '' },
     validationSchema: currencySchema,
     onSubmit: async (
       values: IFormExchange,
-      actions: Readonly<FormikHelpers<IFormExchange>>
+      actions: Readonly<FormikHelpers<IFormExchange>>,
     ) => {
       const currency = values.currency.toUpperCase();
       dispatch(setBaseCurrency(currency));

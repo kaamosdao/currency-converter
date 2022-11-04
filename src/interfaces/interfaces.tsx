@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-import { AxiosInstance } from 'axios';
 import { SerializedError } from '@reduxjs/toolkit';
 import { loadingType, thunkError } from './types';
 
@@ -10,6 +9,8 @@ interface IRate {
 export interface IExchangeRatesState {
   readonly baseCurrency: string;
   readonly rates: IRate;
+  readonly loadingStatus: loadingType;
+  readonly error: thunkError;
 }
 
 export interface IRequestError extends SerializedError {
@@ -33,16 +34,6 @@ export interface IFormConvert {
 
 export interface IFormExchange {
   readonly currency: string;
-}
-
-export interface IMakeRequest {
-  readonly client: AxiosInstance;
-
-  readonly routes: IRoutes;
-
-  readonly convertCurrency: (from: string, to: string, amount: string) => Promise<number>;
-  readonly getCurrency: () => Promise<string>;
-  readonly getExchangeRates: (baseCurrency: string) => Promise<IRate>;
 }
 
 export interface IParsedQuery {
