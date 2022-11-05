@@ -18,6 +18,12 @@ push:
 	git commit -m "$(ARGS)"
 	git push
 
+docker-build:
+	docker-build:
+	docker build -t kaamosdao/converter .
+
+docker-run:
+	docker run -d -p 4242:4242 --rm --name todoapp kaamosdao/converter
+
 test:
 	npm run test
-	
