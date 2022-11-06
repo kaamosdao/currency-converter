@@ -5,7 +5,7 @@ const Layout: React.FC = () => (
   <div className="d-flex flex-column h-100">
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container-fluid">
-        <span className="navbar-brand mb-0 h1">Currency Converter</span>
+        <span className="navbar-brand mb-0 ms-3 h1">Currency Converter</span>
         <button
           className="navbar-toggler"
           type="button"
