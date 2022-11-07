@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack --mode development",
     "build": "cross-env NODE_ENV=production webpack --mode production",
-    "serve": "cross-env NODE_ENV=development webpack serve --mode development --open"
+    "serve": "cross-env NODE_ENV=development webpack serve --mode development --open",
+    "test": "playwright test"
   },
   "repository": {
     "type": "git",
@@ -41,6 +42,7 @@
     "@babel/preset-env": "^7.19.4",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
+    "@playwright/test": "^1.27.1",
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
     "autoprefixer": "^10.4.12",
