@@ -19,10 +19,10 @@ const Layout: React.FC = () => (
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <div className="navbar-nav">
-            <Link className="nav-link" to="/">
+            <Link className="nav-link link-convertation" to="/">
               Convertation
             </Link>
-            <Link className="nav-link ms-3" to="/exchangerates">
+            <Link className="nav-link ms-3 link-exchange" to="/exchangerates">
               ExchangeRates
             </Link>
           </div>

@@ -25,7 +25,7 @@ export const fetchAndSetBaseCurrency = createAsyncThunk(
   },
 );
 
-const getExchangeCurrencies = (base: string) => {
+export const getExchangeCurrencies = (base: string) => {
   if (base === 'EUR') {
     return 'USD';
   }

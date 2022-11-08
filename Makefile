@@ -26,4 +26,7 @@ docker-run:
 	docker run -d -p 4242:4242 --rm --name todoapp kaamosdao/converter
 
 test:
-	npm run test
+	npm run test:e2e
+
+test-unit:
+	npm run test:unit 
