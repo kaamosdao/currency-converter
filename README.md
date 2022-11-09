@@ -1,4 +1,8 @@
-# currency-converter
+# Currency Converter
+[![E2E Tests](https://github.com/kaamosdao/currency-converter/actions/workflows/e2e-test.yml/badge.svg)](https://github.com/kaamosdao/currency-converter/actions/workflows/e2e-test.yml)
+[![Linting](https://github.com/kaamosdao/currency-converter/actions/workflows/linter-check.yml/badge.svg)](https://github.com/kaamosdao/currency-converter/actions/workflows/linter-check.yml)
+[![Unit test](https://github.com/kaamosdao/currency-converter/actions/workflows/unit-test.yml/badge.svg)](https://github.com/kaamosdao/currency-converter/actions/workflows/unit-test.yml)
+
 SPA for converting currency.
 
 Server may response with error, status 429. That mean client ran out of free monthly requests limit.
