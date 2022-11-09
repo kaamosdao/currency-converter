@@ -1,17 +1,26 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios, { AxiosError } from 'axios';
-import { IExchangeRatesState, ILocalStorageData, IRequestError } from '../interfaces/interfaces';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import {
+  IExchangeRatesState,
+  IGeolocationResponse,
+  ILocalStorageData,
+  IRatesResponse,
+  IRequestError,
+} from '../interfaces/interfaces';
 import routes from '../utils/routes';
 
 export const fetchAndSetBaseCurrency = createAsyncThunk(
   'fetchAndSetBaseCurrency',
   async (localStorage: ILocalStorageData, { rejectWithValue }) => {
     try {
-      const response = await axios.get(routes.geolocation, {
-        params: {
-          api_key: process.env.REACT_APP_GEO_KEY,
+      const response: AxiosResponse<IGeolocationResponse> = await axios.get(
+        routes.geolocation,
+        {
+          params: {
+            api_key: process.env.REACT_APP_GEO_KEY,
+          },
         },
-      });
+      );
       const baseCurrency: string = response.data.currency.currency_code;
       localStorage.setData(baseCurrency);
       return baseCurrency;
@@ -19,7 +28,7 @@ export const fetchAndSetBaseCurrency = createAsyncThunk(
       const error = err as AxiosError;
       return rejectWithValue({
         message: error.message,
-        code: String(error.response!.status),
+        code: String(error.response?.status),
       });
     }
   },
@@ -39,13 +48,16 @@ export const fetchRates = createAsyncThunk(
   'fetchRates',
   async (baseCurrency: string, { rejectWithValue }) => {
     try {
-      const response = await axios.get(routes.rates, {
-        params: {
-          base: baseCurrency,
-          symbols: getExchangeCurrencies(baseCurrency),
+      const response: AxiosResponse<IRatesResponse> = await axios.get(
+        routes.rates,
+        {
+          params: {
+            base: baseCurrency,
+            symbols: getExchangeCurrencies(baseCurrency),
+          },
+          headers: { apikey: process.env.REACT_APP_RATES_KEY },
         },
-        headers: { apikey: process.env.REACT_APP_RATES_KEY },
-      });
+      );
 
       const { rates } = response.data;
       return rates;
@@ -53,7 +65,7 @@ export const fetchRates = createAsyncThunk(
       const error = err as AxiosError;
       return rejectWithValue({
         message: error.message,
-        code: String(error.response!.status),
+        code: String(error.response?.status),
       });
     }
   },

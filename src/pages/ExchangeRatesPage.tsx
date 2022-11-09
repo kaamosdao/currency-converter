@@ -6,6 +6,7 @@ import ExchangeRates from '../components/exchangeRates';
 import ExchangeRatesForm from '../components/excangeRatesForm';
 import Spinner from '../components/Spinner';
 import { fetchAndSetBaseCurrency, fetchRates, setBaseCurrency } from '../slices/exchangeRatesSlice';
+import showToast from '../utils/showToast';
 
 const ExchangeRatesPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -19,13 +20,13 @@ const ExchangeRatesPage: React.FC = () => {
       const currency = localStorage.getData();
       dispatch(setBaseCurrency(currency));
     } else {
-      dispatch(fetchAndSetBaseCurrency(localStorage));
+      dispatch(fetchAndSetBaseCurrency(localStorage)).catch(() => showToast('Some error occured, please try later', 'error'));
     }
   }, [dispatch, localStorage]);
 
   useEffect(() => {
     if (baseCurrency) {
-      dispatch(fetchRates(baseCurrency));
+      dispatch(fetchRates(baseCurrency)).catch(() => showToast('Some error occured, please try later', 'error'));
     }
   }, [dispatch, baseCurrency]);
 

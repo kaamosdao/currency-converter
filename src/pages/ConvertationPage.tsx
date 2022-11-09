@@ -19,7 +19,7 @@ const Convertation: React.FC = () => {
     ) => {
       const query = values.converterQuery.trim();
       const data = parseQuery(query);
-      dispatch(convertCurrency(data));
+      await dispatch(convertCurrency(data));
       actions.resetForm();
     },
   });

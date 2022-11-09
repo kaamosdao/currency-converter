@@ -7,6 +7,7 @@ import {
 import { IFormExchange } from '../interfaces/interfaces';
 import { currencySchema } from '../utils/validationSchema';
 import { setBaseCurrency } from '../slices/exchangeRatesSlice';
+import showToast from '../utils/showToast';
 
 const ExchangeRatesForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -15,7 +16,7 @@ const ExchangeRatesForm: React.FC = () => {
   const formik: FormikProps<IFormExchange> = useFormik<IFormExchange>({
     initialValues: { currency: '' },
     validationSchema: currencySchema,
-    onSubmit: async (
+    onSubmit: (
       values: IFormExchange,
       actions: Readonly<FormikHelpers<IFormExchange>>,
     ) => {

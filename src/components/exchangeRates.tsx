@@ -23,12 +23,12 @@ const ExchangeRates: React.FC = () => {
       <ul className="list-group list-group-flush">
         {rates.USD && (
           <li className="list-group-item">
-            {getConvertedCurency(baseCurrency, 'USD', rates.USD)}
+            {getConvertedCurency(baseCurrency, 'USD', String(rates.USD))}
           </li>
         )}
         {rates.EUR && (
           <li className="list-group-item">
-            {getConvertedCurency(baseCurrency, 'EUR', rates.EUR)}
+            {getConvertedCurency(baseCurrency, 'EUR', String(rates.EUR))}
           </li>
         )}
       </ul>

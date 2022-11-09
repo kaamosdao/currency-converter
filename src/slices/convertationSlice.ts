@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios, { AxiosError } from 'axios';
-import { IConvertationState, IParsedQuery, IRequestError } from '../interfaces/interfaces';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import {
+  IConvertationResponse,
+  IConvertationState,
+  IParsedQuery,
+  IRequestError,
+} from '../interfaces/interfaces';
 import routes from '../utils/routes';
 
 export const convertCurrency = createAsyncThunk(
@@ -8,10 +13,13 @@ export const convertCurrency = createAsyncThunk(
   async (data: IParsedQuery, { rejectWithValue }) => {
     const { from, to, amount } = data;
     try {
-      const response = await axios.get(routes.convert, {
-        params: { from, to, amount },
-        headers: { apikey: process.env.REACT_APP_RATES_KEY },
-      });
+      const response: AxiosResponse<IConvertationResponse> = await axios.get(
+        routes.convert,
+        {
+          params: { from, to, amount },
+          headers: { apikey: process.env.REACT_APP_RATES_KEY },
+        },
+      );
       const result = `${amount} ${from} in ${to} = ${response.data.result}`;
       return result;
     } catch (err) {
@@ -19,7 +27,7 @@ export const convertCurrency = createAsyncThunk(
 
       return rejectWithValue({
         message: error.message,
-        code: String(error.response!.status),
+        code: String(error.response?.status),
       });
     }
   },
