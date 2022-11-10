@@ -6,6 +6,7 @@
 SPA for converting currency.
 
 Server may response with error, status 429. That mean client ran out of free monthly requests limit.
+Currently E2e tests are in progress.
 
 This project is the solution to this test task: 
 [Тестовое задание на вакансию "Frontend Developer"](https://github.com/appbooster/test-assignments/blob/master/tasks/frontend.md)
