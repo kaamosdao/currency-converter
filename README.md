@@ -11,6 +11,7 @@ Currently E2e tests are in progress.
 This project is the solution to this test task: 
 [Тестовое задание на вакансию "Frontend Developer"](https://github.com/appbooster/test-assignments/blob/master/tasks/frontend.md)
 
+[Try it here! Deployed on Vercel.](https://currency-converter-kaamosdao.vercel.app/)
 #
 ## Install
 
